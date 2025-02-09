@@ -2,57 +2,12 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
+				"internalType": "string",
+				"name": "genre",
+				"type": "string"
 			}
 		],
-		"name": "approve",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "enum Soundlink.Role",
-						"name": "role",
-						"type": "uint8"
-					},
-					{
-						"internalType": "string",
-						"name": "farcaster_id",
-						"type": "string"
-					},
-					{
-						"internalType": "string[]",
-						"name": "genres",
-						"type": "string[]"
-					},
-					{
-						"internalType": "uint256[]",
-						"name": "beatsPurchased",
-						"type": "uint256[]"
-					},
-					{
-						"internalType": "uint256[]",
-						"name": "beatsUploaded",
-						"type": "uint256[]"
-					}
-				],
-				"internalType": "struct Soundlink.Profile",
-				"name": "_profile",
-				"type": "tuple"
-			}
-		],
-		"name": "createProfile",
+		"name": "addGenre",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -216,6 +171,24 @@
 		"type": "event"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -321,6 +294,72 @@
 		"type": "event"
 	},
 	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "enum Soundlink.Role",
+						"name": "role",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "farcaster_id",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "genres",
+						"type": "string[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "beatsPurchased",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "beatsUploaded",
+						"type": "uint256[]"
+					}
+				],
+				"internalType": "struct Soundlink.Profile",
+				"name": "_profile",
+				"type": "tuple"
+			}
+		],
+		"name": "createProfile",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "genre",
+				"type": "string"
+			}
+		],
+		"name": "GenreAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "genre",
+				"type": "string"
+			}
+		],
+		"name": "GenreRemoved",
+		"type": "event"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -369,6 +408,19 @@
 		"name": "purchaseBeat",
 		"outputs": [],
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "genre",
+				"type": "string"
+			}
+		],
+		"name": "removeGenre",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -601,6 +653,25 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "genres",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "getAllBeats",
 		"outputs": [
@@ -674,6 +745,19 @@
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getGenres",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
 			}
 		],
 		"stateMutability": "view",

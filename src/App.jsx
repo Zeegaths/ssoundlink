@@ -1,24 +1,61 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Home from './pages/Home.jsx';
-import './index.css';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Dashboard from './pages/Dashboard.jsx';
-import Feed from './pages/Feed.jsx';
-import MarketPlace from './pages/Marketplace.jsx';
-import GlobalProvider from './context/Global/GlobalContext.jsx';
-import Matcher from './pages/Matcher.jsx';
-import ProfileSetup from './components/ProfileSetup.jsx';
-import { AuthKitProvider } from '@farcaster/auth-kit';
-import "@farcaster/auth-kit/styles.css";
-import RapBattles from './pages/RapBattles.jsx';
-import AddBattle from './pages/AddBattle.jsx';
-import BeatUploadForm from './pages/BeatUploadForm.jsx';
-import { optimism } from 'wagmi/chains';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// import { WagmiProvider } from 'wagmi';
+// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import { createAppKit } from '@reown/appkit/react';
+// import { sepolia, opBNBTestnet } from '@reown/appkit/networks';
+// import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
 
+// Import components
+import Dashboard from './pages/Dashboard';
+import Feed from './pages/Feed';
+import MarketPlace from './pages/Marketplace';
+import Matcher from './pages/Matcher';
+import ProfileSetup from './components/ProfileSetup';
+import RapBattles from './pages/RapBattles';
+import AddBattle from './pages/AddBattle';
+import BeatUploadForm from './pages/BeatUploadForm';
+import CreateProfile from './components/CreateProfile';
+import GlobalProvider from './context/Global/GlobalContext';
+
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { WagmiProvider } from 'wagmi';
+import { 
+  sepolia,
+  opBNBTestnet
+} from 'wagmi/chains';
+import {
+  QueryClientProvider,
+  QueryClient,
+} from "@tanstack/react-query";
+
+// Import styles
+import './index.css';
+
+const projectId = 'YOUR_PROJECT_ID' // Replace with your project ID
+
+// App metadata
+const metadata = {
+  name: 'RapBattle App',
+  description: 'A platform for rap battles and beat marketplace',
+  url: 'https://your-app-url.com',
+  icons: ['https://your-app-icon-url.com']
+}
+
+
+const config = getDefaultConfig({
+  appName: 'My RainbowKit App',
+  projectId: 'YOUR_PROJECT_ID',
+  chains: [sepolia,
+    opBNBTestnet],
+  ssr: true, // If your dApp uses server side rendering (SSR)
+});
+// Create router
 const router = createBrowserRouter([
   { path: "/", element: <Dashboard /> },
   { path: "/dashboard", element: <Dashboard /> },
@@ -29,23 +66,27 @@ const router = createBrowserRouter([
   { path: "/rap-battles", element: <RapBattles /> },
   { path: "/add-battle", element: <AddBattle /> },
   { path: "/beat-upload", element: <BeatUploadForm /> },
+  { path: "/create-profile", element: <CreateProfile /> },
 ]);
 
-const config = {
-  relay: "https://relay.farcaster.xyz",
-  rpcUrl: "https://mainnet.optimism.io",
-  domain: "localhost:3001",
-  siweUri: "localhost:3001/dashboard",
-};
+// Create Query Client
+const queryClient = new QueryClient();
 
+// Main App Component
 const App = () => {
   return (
-    <AuthKitProvider config={config}>
-      <GlobalProvider>
-        <RouterProvider router={router} />
-      </GlobalProvider>
-    </AuthKitProvider>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+      <RainbowKitProvider>
+        <GlobalProvider>
+          <RouterProvider router={router} />
+        </GlobalProvider>
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 };
+
+
 
 export default App;
